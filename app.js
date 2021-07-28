@@ -9,9 +9,14 @@ const taskInput = document.querySelector('#task');
 loadEventListeners();
 
 function loadEventListeners() {
+    //AGREGA ENTRADAS A LA LISTA
     form.addEventListener('submit', addTask);
+    //ELIMINA ENTRADAS DE LA LISTA
     taskList.addEventListener('click', removeTask);
+    //ELIMINA TODAS LAS ENTRADAS DE LA LISTA
     clearBtn.addEventListener('click', clearTasks);
+    //FILTRA ENTRADAS DE LA LISTA
+    filter.addEventListener('keyup', filterTask);
 }
 
 //ADDTASK FUNCTION
@@ -37,7 +42,7 @@ function addTask(e){
     //AGREGAR LI A UL
     taskList.appendChild(li);
     //BORRAR ENTRADA DE TAREAS
-    taskList.value = '';
+    taskInput.value = '';
 
 
 
@@ -56,4 +61,19 @@ function clearTasks(e){
     while(taskList.firstChild){
         taskList.removeChild(taskList.firstChild);
     }
+}
+
+function filterTask(e){
+    const text = e.target.value.toLowerCase();
+
+    document.querySelectorAll('.collection-item').forEach(
+        function (task){
+            const item = task.firstChild.textContent;
+            if(item.toLowerCase().indexOf(text) != -1){
+                task.style.display = 'block';
+            } else {
+                task.style.display = 'none';
+            }
+        }
+    );
 }
